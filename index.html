@@ -1,0 +1,1425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QS National History Museum: Transatlantic Trade & Resistance Archive (1770–1807)</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            serif: ['Lora', 'serif'],
+            display: ['Cinzel', 'serif'],
+          },
+          colors: {
+            museumDark: '#12161a',
+            museumPanel: '#1c2228',
+            mahogany: '#2d1a12',
+            mahoganyBorder: '#4a2e20',
+            brass: '#d4af37',
+            brassLight: '#f3e5ab',
+            parchment: '#fcf8f0',
+            parchmentDark: '#f3ece0',
+            ink: '#1c1917',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #0f1215;
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(74, 46, 32, 0.3) 0%, transparent 60%),
+        radial-gradient(circle at 80% 100%, rgba(212, 175, 55, 0.08) 0%, transparent 50%);
+      color: #e2e8f0;
+      min-height: 100vh;
+    }
+
+    .parchment-card {
+      background-color: #fdfbf7;
+      background-image: radial-gradient(#e5decf 1px, transparent 0);
+      background-size: 24px 24px;
+      color: #1c1917;
+      border: 1px solid #d4c5b0;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35), inset 0 0 40px rgba(212, 197, 176, 0.3);
+    }
+
+    .museum-panel {
+      background: rgba(28, 34, 40, 0.85);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(212, 175, 55, 0.25);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+    }
+
+    .gold-glow {
+      text-shadow: 0 0 12px rgba(212, 175, 55, 0.4);
+    }
+
+    .btn-archivist {
+      background: linear-gradient(135deg, #2a2019 0%, #1a1410 100%);
+      border: 1px solid #8c6d3f;
+      color: #f3e5ab;
+      transition: all 0.2s ease-in-out;
+    }
+
+    .btn-archivist:hover:not(:disabled) {
+      background: linear-gradient(135deg, #3d2f25 0%, #2a2019 100%);
+      border-color: #d4af37;
+      box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
+
+    .btn-archivist.correct {
+      background: linear-gradient(135deg, #14532d 0%, #052e16 100%) !important;
+      border-color: #22c55e !important;
+      color: #f0fdf4 !important;
+      box-shadow: 0 0 20px rgba(34, 197, 94, 0.4) !important;
+    }
+
+    .btn-archivist.wrong {
+      background: linear-gradient(135deg, #7f1d1d 0%, #450a0a 100%) !important;
+      border-color: #ef4444 !important;
+      color: #fef2f2 !important;
+      box-shadow: 0 0 20px rgba(239, 68, 68, 0.4) !important;
+    }
+
+    /* Custom Scrollbars */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #12161a;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #4a2e20;
+      border-radius: 4px;
+      border: 1px solid #d4af37;
+    }
+  </style>
+</head>
+<body class="font-sans antialiased flex flex-col justify-between min-h-screen p-3 md:p-6">
+
+  <!-- RESPECT & REMEMBRANCE MODAL (Initial Page Load) -->
+  <div id="respectModal" class="fixed inset-0 bg-black/90 backdrop-blur-md flex items-center justify-center z-50 p-4">
+    <div class="museum-panel rounded-2xl max-w-2xl w-full p-6 md:p-8 border-2 border-brass/60 shadow-2xl relative overflow-hidden">
+      <div class="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-amber-700 via-brass to-amber-900"></div>
+      
+      <div class="flex items-center gap-3 mb-4">
+        <span class="text-3xl">🕊️</span>
+        <div>
+          <h2 class="font-display font-bold text-xl md:text-2xl text-brassLight gold-glow">
+            RESPECT & REMEMBRANCE NOTICE
+          </h2>
+          <p class="text-xs text-amber-200/80 uppercase tracking-widest font-semibold">
+            QS National 5 History • Pedagogical & Sensitivity Standards
+          </p>
+        </div>
+      </div>
+
+      <div class="space-y-3 text-sm text-slate-300 leading-relaxed mb-6 font-serif">
+        <p>
+          Welcome to the <strong>QS National History Museum Archive</strong>. This revision resource covers <em>Key Issue 1: The Trade in Enslaved African People (1770–1807)</em>.
+        </p>
+        <p>
+          The Transatlantic Slave Trade caused immense human suffering, trauma, and structural destruction across West Africa and the Americas. As historians, we study these events with dignity, academic integrity, and profound respect for the victims and freedom seekers.
+        </p>
+        <div class="p-3.5 rounded-lg bg-black/40 border-l-4 border-brass text-xs font-sans text-amber-100/90 leading-relaxed">
+          <strong>Humanizing Language Policy:</strong> In line with modern historical practice, this module strictly uses humanizing terminology—referring to captives as <strong>"enslaved Africans"</strong>, captors as <strong>"enslavers"</strong>, and resistance fighters as <strong>"freedom seekers"</strong>.
+        </div>
+      </div>
+
+      <button onclick="dismissRespectModal()" class="w-full py-3.5 rounded-xl font-display font-bold text-sm bg-gradient-to-r from-amber-800 to-amber-950 hover:from-amber-700 hover:to-amber-900 text-brassLight border border-brass/60 shadow-lg transition transform hover:scale-[1.01] active:scale-[0.99]">
+        ENTER THE HISTORICAL ARCHIVE
+      </button>
+    </div>
+  </div>
+
+  <!-- TOP HEADER / MUSEUM TITLE BAR -->
+  <header class="max-w-6xl w-full mx-auto mb-6">
+    <div class="museum-panel rounded-2xl p-4 md:p-5 flex flex-col md:flex-row items-center justify-between gap-4 border-l-4 border-l-brass">
+      <div class="flex items-center gap-4">
+        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-mahogany to-black border border-brass/50 flex items-center justify-center text-2xl shadow-inner">
+          🏛️
+        </div>
+        <div>
+          <h1 class="font-display font-extrabold text-lg md:text-2xl text-brassLight gold-glow tracking-wide">
+            QS NATIONAL HISTORY MUSEUM
+          </h1>
+          <p class="text-xs text-amber-300/90 font-medium tracking-wider uppercase">
+            Transatlantic Trade & Resistance Archive (1770–1807) • QS National 5 History
+          </p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <button id="soundToggleBtn" onclick="toggleSound()" class="px-3.5 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 text-xs text-amber-200 font-semibold border border-amber-900/60 transition">
+          🔊 Sound: ON
+        </button>
+        <button onclick="openTeacherEditor()" class="px-3.5 py-2 rounded-lg bg-amber-950/80 hover:bg-amber-900 text-xs text-brassLight font-semibold border border-brass/40 transition">
+          ⚙️ Teacher Editor
+        </button>
+        <button onclick="confirmResetProgress()" class="px-3.5 py-2 rounded-lg bg-red-950/80 hover:bg-red-900 text-xs text-red-200 font-semibold border border-red-800/50 transition">
+          🔄 Reset Progress
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- NAVIGATION TABS -->
+  <nav class="max-w-6xl w-full mx-auto mb-6 flex gap-3">
+    <button id="tabModulesBtn" onclick="switchTab('modules')" class="flex-1 py-3 px-4 rounded-xl font-display font-bold text-xs md:text-sm tracking-wider uppercase bg-brass text-museumDark border border-brassLight shadow-lg transition">
+      📜 Research Modules (Investigation)
+    </button>
+    <button id="tabGalleryBtn" onclick="switchTab('gallery')" class="flex-1 py-3 px-4 rounded-xl font-display font-bold text-xs md:text-sm tracking-wider uppercase bg-slate-900/80 text-amber-200/70 border border-amber-900/40 hover:text-amber-200 transition">
+      🏛️ Primary Document Gallery (<span id="unlockedCountBadge">0</span>/6 Unlocked)
+    </button>
+  </nav>
+
+  <!-- MAIN CONTENT CONTAINER -->
+  <main class="max-w-6xl w-full mx-auto flex-1">
+
+    <!-- VIEW 1: RESEARCH MODULES & INVESTIGATION -->
+    <div id="viewModules" class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+      
+      <!-- MODULE SELECTION SIDEBAR (Left - 4 Cols) -->
+      <div class="lg:col-span-4 flex flex-col gap-3">
+        <div class="museum-panel rounded-2xl p-4 border-b-2 border-brass/40">
+          <h2 class="font-display font-bold text-xs text-brassLight uppercase tracking-widest mb-1">
+            RESEARCH MODULES
+          </h2>
+          <p class="text-[11px] text-slate-400 font-serif">
+            Select an investigation topic from Revision Booklet 1 to analyze primary source evidence.
+          </p>
+        </div>
+
+        <div id="moduleList" class="flex flex-col gap-2">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+
+      <!-- ACTIVE INVESTIGATION / QUESTION PANEL (Right - 8 Cols) -->
+      <div class="lg:col-span-8 flex flex-col gap-5">
+        
+        <div class="museum-panel rounded-2xl p-5 md:p-6 relative overflow-hidden border-t-2 border-t-brass">
+          
+          <!-- Module & Question Info Bar -->
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-amber-900/40 pb-3 mb-4">
+            <span id="activeModuleBadge" class="text-xs font-bold font-display uppercase tracking-wider text-brassLight bg-amber-950/80 px-3 py-1 rounded border border-brass/30">
+              MODULE 1: THE TRIANGULAR TRADE
+            </span>
+            <span id="questionProgressBadge" class="text-xs font-semibold text-slate-400">
+              QUESTION 1 OF 5
+            </span>
+          </div>
+
+          <!-- Primary Document Snippet / Source Context Box -->
+          <div id="sourceSnippetBox" class="mb-5 p-4 rounded-xl bg-black/50 border border-brass/20 font-serif text-sm text-amber-100/90 leading-relaxed italic relative">
+            <span class="absolute -top-3 left-3 bg-mahogany px-2 text-[10px] font-sans font-bold uppercase tracking-widest text-brass">
+              PRIMARY EVIDENCE / HISTORICAL QUERY
+            </span>
+            <p id="sourceSnippetText" class="mt-1">
+              Loading archival question...
+            </p>
+          </div>
+
+          <!-- Investigation Question -->
+          <h3 id="investigationQuestionText" class="font-display font-bold text-base md:text-lg text-white mb-4 leading-snug">
+            Question text loading...
+          </h3>
+
+          <!-- Options Grid (Dynamically Shuffled) -->
+          <div id="optionsContainer" class="grid grid-cols-1 gap-3 mb-5">
+            <!-- Rendered dynamically -->
+          </div>
+
+          <!-- QS National 5 Revision Debrief Box -->
+          <div id="debriefContainer" class="hidden p-4 rounded-xl bg-amber-950/40 border border-brass/50 text-amber-100 text-xs md:text-sm leading-relaxed mb-4 font-serif">
+            <div class="font-sans font-bold text-brass uppercase tracking-wider mb-1 flex items-center gap-1.5 text-xs">
+              <span>📚</span> QS NATIONAL 5 REVISION DEBRIEF:
+            </div>
+            <p id="debriefContentText"></p>
+          </div>
+
+          <!-- Footer Action Buttons -->
+          <div class="flex items-center justify-between gap-4 border-t border-amber-900/40 pt-4">
+            <div id="archivistHintText" class="text-xs text-amber-300/80 italic font-serif flex-1">
+              <!-- Hint appears here -->
+            </div>
+            <button id="nextQuestionBtn" onclick="advanceQuestion()" class="hidden px-6 py-2.5 rounded-xl font-display font-bold text-xs uppercase tracking-wider bg-brass hover:bg-brassLight text-museumDark transition transform hover:scale-105">
+              NEXT QUESTION ➔
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- VIEW 2: UNLOCKED ARCHIVE GALLERY -->
+    <div id="viewGallery" class="hidden flex flex-col gap-6">
+      <div class="museum-panel rounded-2xl p-5 border-l-4 border-l-brass flex flex-col md:flex-row items-center justify-between gap-4">
+        <div>
+          <h2 class="font-display font-bold text-xl text-brassLight gold-glow mb-1">
+            PRIMARY SOURCE EVIDENCE ARCHIVE
+          </h2>
+          <p class="text-xs text-slate-300 font-serif">
+            Examine primary document transcripts, historical ledgers, court records, and academic analysis unlocked through your research.
+          </p>
+        </div>
+        <div class="text-right">
+          <span class="text-2xl font-display font-bold text-brass" id="galleryProgressText">0 / 6</span>
+          <p class="text-[10px] text-amber-200/70 uppercase tracking-widest">DOCUMENTS UNLOCKED</p>
+        </div>
+      </div>
+
+      <!-- Gallery Grid (6 Primary Evidence Cards) -->
+      <div id="galleryGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+
+  </main>
+
+  <!-- TEACHER EDITOR MODAL -->
+  <div id="teacherModal" class="fixed inset-0 bg-black/85 backdrop-blur-sm flex items-center justify-center z-50 p-4 hidden">
+    <div class="museum-panel rounded-2xl max-w-3xl w-full p-6 border-2 border-brass/60 shadow-2xl flex flex-col gap-4 max-h-[90vh]">
+      <div class="flex items-center justify-between border-b border-brass/30 pb-3">
+        <h3 class="font-display font-bold text-lg text-brassLight">
+          ⚙️ TEACHER EDITOR SUITE (QS JSON BACKEND)
+        </h3>
+        <button onclick="closeTeacherEditor()" class="text-slate-400 hover:text-white font-bold text-lg">✕</button>
+      </div>
+
+      <p class="text-xs text-slate-300 font-serif leading-relaxed">
+        You can inspect or modify the underlying QS National 5 question dataset below. Save changes to update local storage for this device.
+      </p>
+
+      <textarea id="jsonEditorArea" class="w-full flex-1 min-h-[300px] p-3 rounded-lg bg-slate-950 font-mono text-xs text-amber-200 border border-slate-700 focus:border-brass focus:outline-none"></textarea>
+
+      <div class="flex items-center justify-between gap-3 border-t border-brass/30 pt-3">
+        <button onclick="confirmResetDefaultJSON()" class="px-4 py-2 rounded-lg bg-red-950 hover:bg-red-900 text-xs font-bold text-red-200 border border-red-800 transition">
+          Restore QS Defaults
+        </button>
+        <div class="flex gap-2">
+          <button onclick="closeTeacherEditor()" class="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-300 transition">
+            Cancel
+          </button>
+          <button onclick="saveTeacherJSON()" class="px-5 py-2 rounded-lg bg-brass hover:bg-brassLight text-museumDark text-xs font-bold font-display transition">
+            Save JSON Data
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CUSTOM CONFIRMATION MODAL -->
+  <div id="customConfirmModal" class="fixed inset-0 bg-black/85 backdrop-blur-sm flex items-center justify-center z-50 p-4 hidden">
+    <div class="museum-panel rounded-2xl max-w-md w-full p-6 border-2 border-brass/60 shadow-2xl flex flex-col gap-4">
+      <h3 id="confirmModalTitle" class="font-display font-bold text-base text-brassLight">
+        CONFIRMATION REQUIRED
+      </h3>
+      <p id="confirmModalMessage" class="text-xs text-slate-300 font-serif leading-relaxed">
+        Are you sure you wish to proceed?
+      </p>
+      <div class="flex justify-end gap-3 pt-2 border-t border-brass/30">
+        <button id="confirmModalCancelBtn" class="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-300 transition">
+          Cancel
+        </button>
+        <button id="confirmModalOkBtn" class="px-4 py-2 rounded-lg bg-brass hover:bg-brassLight text-museumDark text-xs font-bold font-display transition">
+          Confirm
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div id="toastContainer" class="fixed bottom-4 right-4 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- JAVASCRIPT ENGINE -->
+  <script>
+    /* ==========================================================================
+       1. MASTER QS NATIONAL 5 QUESTION DATASET (30 UNIQUE QUESTIONS across 6 MODULES)
+       ========================================================================== */
+    const DEFAULT_DATASET = [
+      // ---------------- MODULE 1: THE TRIANGULAR TRADE (5 QUESTIONS) ----------------
+      {
+        moduleId: 1,
+        moduleName: "1. The Triangular Trade",
+        title: "Stage 1: Departure Ports",
+        snippet: "Liverpool Port Customs Entry (1782): 'Outward bound cargo fitted out for West Africa...'",
+        question: "Which major British departure ports were most prominently involved in fitting out slave ships bound for West Africa?",
+        options: [
+          "Liverpool, Bristol, and London",
+          "Aberdeen, Dundee, and Inverness",
+          "Edinburgh, Greenock, and Stirling",
+          "Plymouth, Dover, and Southampton"
+        ],
+        answer: 0,
+        hint: "Consider the three main British trading ports that dominated Atlantic voyages.",
+        debrief: "Slave ships mainly departed from Liverpool, Bristol, and London. From 1699 to 1807, Liverpool alone launched over 5,000 voyages."
+      },
+      {
+        moduleId: 1,
+        moduleName: "1. The Triangular Trade",
+        title: "Stage 1: Outward Cargo",
+        snippet: "Cargo Manifest Extract (1785): 'Inventory includes 250 flintlock muskets, brass pans, woolen cloth, and spirits...'",
+        question: "What manufactured goods were exported from British ports to West Africa to exchange for captured Africans?",
+        options: [
+          "Guns, gunpowder, cloth, alcohol, glass beads, and iron pots",
+          "Raw cotton, unprocessed sugar, and tobacco leaves",
+          "Steam engines, railway tracks, and coal",
+          "Spices, silk robes, and porcelain tea sets"
+        ],
+        answer: 0,
+        hint: "British factories manufactured these finished goods specifically for trade on the West African coast.",
+        debrief: "Manufactured goods like cloth, firearms, gunpowder, alcohol, glass beads, and pots were exchanged on the African coast for captured Africans."
+      },
+      {
+        moduleId: 1,
+        moduleName: "1. The Triangular Trade",
+        title: "Stage 2: The Middle Passage Leg",
+        snippet: "Maritime Log Entry (1788): 'Vessel departed West African coast carrying 350 captive Africans bound for West Indian plantations...'",
+        question: "What occurred during the second leg of the Triangular Trade, known as the Middle Passage?",
+        options: [
+          "Enslaved Africans were forcibly transported across the Atlantic Ocean to the West Indies and the Americas",
+          "Manufactured goods were shipped from London directly to American colonies",
+          "Raw sugar and tobacco were transported from Jamaica back to Liverpool",
+          "British sailors were trained in navigation along the West African coastline"
+        ],
+        answer: 0,
+        hint: "This infamous ocean crossing formed the middle leg connecting Africa to the Americas.",
+        debrief: "The Middle Passage was the horrific second leg of the triangle, forcibly transporting enslaved Africans across the Atlantic under brutal conditions."
+      },
+      {
+        moduleId: 1,
+        moduleName: "1. The Triangular Trade",
+        title: "Stage 3: Return Cargoes",
+        snippet: "Colonial Commerce Ledger (1790): 'Upon completion of sales in Jamaica, the vessel returned laden with tropical commodities...'",
+        question: "What valuable raw materials were imported back to Britain on the final leg of the Triangular Trade?",
+        options: [
+          "Sugar, coffee, tobacco, cotton, and molasses",
+          "Tea, spices, silk, and opium",
+          "Timber, flax, coal, and iron ore",
+          "Wheat, barley, wool, and livestock"
+        ],
+        answer: 0,
+        hint: "These plantation crops were produced by enslaved labor in the Americas and sold in Britain for immense profit.",
+        debrief: "Profits from colonial slave sales were reinvested in sugar, coffee, cotton, tobacco, and molasses, which were shipped back to Britain and sold for huge financial gains."
+      },
+      {
+        moduleId: 1,
+        moduleName: "1. The Triangular Trade",
+        title: "Reinvestment of Profits",
+        snippet: "Economic History Overview: 'Profits earned across all three legs of the trade supported British domestic enterprise...'",
+        question: "How were the profits earned from the Triangular Trade utilized back in Britain?",
+        options: [
+          "Reinvested into British banking, insurance, agriculture, and factory production",
+          "Distributed equally among all British citizens as state pensions",
+          "Used exclusively to fund overseas exploration in Asia",
+          "Spent entirely on maintaining naval bases in Scandinavia"
+        ],
+        answer: 0,
+        hint: "Trade wealth helped finance Britain's growing industrial economy and financial sectors.",
+        debrief: "Profits from the trade helped develop British commercial banking, marine insurance, manufacturing industries, and grand estates across Britain."
+      },
+
+      // ---------------- MODULE 2: COASTAL FACTORIES & MIDDLE PASSAGE (5 QUESTIONS) ----------------
+      {
+        moduleId: 2,
+        moduleName: "2. Coastal Fortresses & Middle Passage",
+        title: "Coastal Prison Fortresses",
+        snippet: "Surgeon's Journal at Cape Coast Castle (1788): 'Captives are held in dark underground stone dungeons prior to embarkation...'",
+        question: "What were 'slave factories' located on the West African coast?",
+        options: [
+          "Fortified coastal prisons where captured Africans were imprisoned before the Atlantic crossing",
+          "Industrial textile mills where enslaved workers produced cotton cloth",
+          "Shipyards where European slave vessels were constructed and repaired",
+          "Trading markets where British sailors bought food supplies for return voyages"
+        ],
+        answer: 0,
+        hint: "These were stone fortresses like Elmina and Cape Coast Castle used as holding prisons.",
+        debrief: "Slave factories were stone prison fortresses where enslaved Africans were confined in overcrowded, unhygienic dungeons for weeks or months before boarding."
+      },
+      {
+        moduleId: 2,
+        moduleName: "2. Coastal Fortresses & Middle Passage",
+        title: "Branding of Captives",
+        snippet: "Factory Inspection Record (1789): 'Captives passed as fit by surgeons were marked prior to transfer to ship holds...'",
+        question: "Why were captive Africans branded with hot irons in coastal slave factories?",
+        options: [
+          "To mark them as property and prevent African traders substituting unfit captives",
+          "To indicate which religious denomination they belonged to",
+          "To record their age and place of birth for colonial census logs",
+          "To exempt them from hard labor upon reaching plantation destinations"
+        ],
+        answer: 0,
+        hint: "Enslavers used painful branding irons on the chest or shoulder as an identifying mark of ownership.",
+        debrief: "Captives passed as 'fit' by surgeons were branded on the chest or shoulder with hot irons to establish ownership and prevent traders from substituting sick individuals."
+      },
+      {
+        moduleId: 2,
+        moduleName: "2. Coastal Fortresses & Middle Passage",
+        title: "Separation & Abuse in Fortresses",
+        snippet: "Archival Report on Coastal Dungeons: 'Male and female captives were strictly separated within fortress compounds...'",
+        question: "What specific hardships did captive African women face while held in coastal slave factories?",
+        options: [
+          "Sexual exploitation and abuse by European guards and captors",
+          "Forced military drill practice twice daily",
+          "Compulsory education in European languages",
+          "Assignment to technical administrative duties in factory offices"
+        ],
+        answer: 0,
+        hint: "Female captives suffered distinct forms of violence and sexual abuse from fortress personnel.",
+        debrief: "Enslaved women in slave factories suffered severe sexual exploitation by European guards, alongside whipping, overcrowding, and malnutrition."
+      },
+      {
+        moduleId: 2,
+        moduleName: "2. Coastal Fortresses & Middle Passage",
+        title: "Overcrowding & Disease in Ship Holds",
+        snippet: "Parliamentary Testimony (1789): 'Space between decks was under 0.5 meters. Heat was extreme and waste accumulated...'",
+        question: "Which severe intestinal disease spread rapidly in slave ship holds due to extreme overcrowding and unhygienic conditions?",
+        options: [
+          "Dysentery ('the flux')",
+          "Scurvy from excess citrus consumption",
+          "Rickets from overexposure to sun",
+          "Asthma caused by industrial coal smoke"
+        ],
+        answer: 0,
+        hint: "This deadly intestinal illness was caused by contaminated, unhygienic holds.",
+        debrief: "Holds under 0.5m headspace created stifling heat. Floor waste caused rapid spread of dysentery ('the flux'), leading to high mortality rates among captives."
+      },
+      {
+        moduleId: 2,
+        moduleName: "2. Coastal Fortresses & Middle Passage",
+        title: "Force-Feeding & Deck Exercise",
+        snippet: "Ship Surgeon's Log (1791): 'Captives refusing sustenance were subjected to mechanical force-feeding devices...'",
+        question: "How did slave ship crews respond to captives who attempted hunger strikes during the Middle Passage?",
+        options: [
+          "Force-fed them using iron tools like the speculum oris to expand the jaw",
+          "Released them on the nearest island shore immediately",
+          "Provided alternative specialized diets of European delicacies",
+          "Allowed them to remain undisturbed until reaching colonial ports"
+        ],
+        answer: 0,
+        hint: "Captors used a painful scissor-like iron instrument to force open the mouths of striking captives.",
+        debrief: "Crews used the 'speculum oris' (a mechanical jaw-expanding iron tool) to force-feed captives on hunger strikes, preserving their market value, and forced captives to 'dance' on deck for exercise."
+      },
+
+      // ---------------- MODULE 3: RESISTANCE ON THE MIDDLE PASSAGE (5 QUESTIONS) ----------------
+      {
+        moduleId: 3,
+        moduleName: "3. Middle Passage Resistance",
+        title: "Forms of Individual Resistance",
+        snippet: "Log of the Slave Ship 'Brookes' (1785): 'Several captives attempted self-starvation, while others sought opportunity during exercise to leap overboard...'",
+        question: "In what ways did enslaved Africans demonstrate individual resistance during the Middle Passage?",
+        options: [
+          "Going on hunger strikes and jumping overboard to choose death over enslavement",
+          "Writing formal petitions to colonial court judges",
+          "Striking for higher wages upon arriving in West Indian ports",
+          "Refusing to communicate with European surgeons"
+        ],
+        answer: 0,
+        hint: "Captives actively chose self-starvation or drowning as acts of defiance against human bondage.",
+        debrief: "Enslaved Africans engaged in self-starvation and chose to leap into the ocean rather than live in chains, demonstrating desperate acts of resistance."
+      },
+      {
+        moduleId: 3,
+        moduleName: "3. Middle Passage Resistance",
+        title: "Shipboard Revolts",
+        snippet: "Naval Log Extract (1792): 'An insurrection occurred while off the Windward Coast as captives attempted to overwhelm the crew...'",
+        question: "How frequently did enslaved Africans attempt armed revolts to take over slave ships during the Middle Passage?",
+        options: [
+          "Revolts occurred on an estimated 1 in 10 slave voyages across the Atlantic",
+          "No revolts were ever attempted due to total compliance",
+          "Revolts took place on every single voyage without exception",
+          "Revolts were staged only after ships docked safely in European ports"
+        ],
+        answer: 0,
+        hint: "Historical records show shipboard uprisings were attempted on roughly 10% of transatlantic voyages.",
+        debrief: "Historians estimate shipboard revolts were attempted on 1 in 10 voyages, proving that enslaved Africans actively fought for their liberation despite overwhelming odds."
+      },
+      {
+        moduleId: 3,
+        moduleName: "3. Middle Passage Resistance",
+        title: "Pre-boarding Weapon Searches",
+        snippet: "Captain's Instruction Manual (1788): 'All captives must be thoroughly inspected for concealed implements prior to boarding...'",
+        question: "Why were captive Africans thoroughly searched before being loaded onto slave ships?",
+        options: [
+          "To strip them of any potential weapons or metal objects that could be used in revolts",
+          "To ensure they were not carrying gold coin currency onto the vessel",
+          "To inspect their personal clothing for compliance with European dress standards",
+          "To verify they possessed written passports issued by coastal kings"
+        ],
+        answer: 0,
+        hint: "Captors feared captives obtaining metal tools or weapons to attack the crew.",
+        debrief: "Captors searched captives to strip them of any metal or sharp objects that could be used to pick lock chains or attack the crew during shipboard revolts."
+      },
+      {
+        moduleId: 3,
+        moduleName: "3. Middle Passage Resistance",
+        title: "Use of African Interpreters",
+        snippet: "Abolitionist Report (1790): 'Captains employed African interpreters to communicate false assurances to captives...'",
+        question: "How did slave ship captains use African interpreters to help suppress resistance on board?",
+        options: [
+          "To persuade captives that the crew were not cannibals and dissuade them from revolting",
+          "To teach captives English grammar during the ocean crossing",
+          "To organize formal choir performances for the crew's entertainment",
+          "To negotiate land purchase agreements in the West Indies"
+        ],
+        answer: 0,
+        hint: "Interpreters were used to counter widespread fears that captors intended to eat the captives.",
+        debrief: "Captains used interpreters to reassure captives that they were not going to be eaten, attempting to prevent panic and quell plans for shipboard insurrections."
+      },
+      {
+        moduleId: 3,
+        moduleName: "3. Middle Passage Resistance",
+        title: "Factors Causing Revolts to Fail",
+        snippet: "Naval Court Record (1793): 'The insurrection was suppressed due to the crew's heavy firearms and the captives' physical weakness...'",
+        question: "Why did most attempted revolts on slave ships ultimately fail?",
+        options: [
+          "Captives lacked firearms, were weakened by disease, and faced brutal retaliation like flogging",
+          "Captives were offered financial rewards if they surrendered voluntarily",
+          "Ship crews always outnumbered captives by ten to one",
+          "Captives preferred to remain in chains until reaching colonial markets"
+        ],
+        answer: 0,
+        hint: "Captors had heavy firearms, cannons, nets, and inflicted severe violence on revolt leaders.",
+        debrief: "Revolts often failed because captives were physically weakened by disease and starvation, kept in chains, lacked firearms, and faced armed crews who inflicted brutal public floggings and executions."
+      },
+
+      // ---------------- MODULE 4: IMPACT ON BRITISH PORTS (5 QUESTIONS) ----------------
+      {
+        moduleId: 4,
+        moduleName: "4. Impact on British Ports",
+        title: "Volume of Slave Voyages",
+        snippet: "British Maritime History Database: 'Between 1699 and 1807, a vast fleet departed from British ports for Atlantic trade...'",
+        question: "Approximately how many slave voyages were fitted out from British ports between 1699 and 1807?",
+        options: [
+          "12,103 slave voyages",
+          "500 slave voyages",
+          "50,000 slave voyages",
+          "2,000 slave voyages"
+        ],
+        answer: 0,
+        hint: "Over 12,000 documented slaving voyages departed from British ports during this period.",
+        debrief: "British ports cleared 12,103 slaving voyages between 1699 and 1807, with Liverpool, Bristol, and London accounting for the vast majority."
+      },
+      {
+        moduleId: 4,
+        moduleName: "4. Impact on British Ports",
+        title: "Liverpool Population Growth",
+        snippet: "Demographic Study of Lancashire Ports: 'Liverpool grew from a small fishing town in 1699 into a major international trade hub by 1800...'",
+        question: "How did Liverpool's population change between 1699 and 1800 as a direct result of slave trade wealth?",
+        options: [
+          "Grew from 5,000 residents in 1699 to 78,000 by 1800",
+          "Declined from 50,000 to under 10,000 due to emigration",
+          "Remained stagnant at 12,000 residents throughout the century",
+          "Expanded from 100,000 to over 1 million residents"
+        ],
+        answer: 0,
+        hint: "The population expanded more than fifteenfold as trade boomed.",
+        debrief: "Liverpool's population exploded from 5,000 in 1699 to 78,000 by 1800, driven directly by slaving profits, dock construction, and supporting maritime industries."
+      },
+      {
+        moduleId: 4,
+        moduleName: "4. Impact on British Ports",
+        title: "Direct Port Employment",
+        snippet: "Liverpool Trade Directory (1795): 'Port activities sustain employment across multiple maritime trades...'",
+        question: "Which jobs were created in British port cities like Liverpool and Bristol to support the slave trade?",
+        options: [
+          "Shipbuilders, ropemakers, dockers, sailors, and coopers",
+          "Coal miners, railway engineers, and textile weavers only",
+          "Agricultural tenant farmers and highland shepherds",
+          "Automobile mechanics and telecommunications clerks"
+        ],
+        answer: 0,
+        hint: "Think about the specialized maritime craftsmen required to build and supply ocean vessels.",
+        debrief: "Slaving voyages generated thousands of jobs for shipwrights, ropemakers, sailmakers, dockers, coopers (barrel makers), gunsmiths, and sailors."
+      },
+      {
+        moduleId: 4,
+        moduleName: "4. Impact on British Ports",
+        title: "Secondary Processing Industries",
+        snippet: "Bristol Chamber of Commerce Log (1790): 'Refineries along the docks convert raw sugar imports into refined commercial goods...'",
+        question: "Which processing industry developed rapidly alongside Bristol's port to refine imported slave-produced goods?",
+        options: [
+          "Sugar refining and tobacco processing factories",
+          "Steel smelting mills and locomotive works",
+          "Porcelain pottery works and paper manufacturing",
+          "Grain flour mills and beer breweries"
+        ],
+        answer: 0,
+        hint: "Raw sugar harvested on West Indian plantations required industrial refineries built near ports.",
+        debrief: "Bristol and London built numerous sugar refineries and tobacco processing warehouses right by the docks to process raw plantation crops imported from the West Indies."
+      },
+      {
+        moduleId: 4,
+        moduleName: "4. Impact on British Ports",
+        title: "Scottish & Financial Sector Links",
+        snippet: "Scottish Economic History Overview: 'Scottish merchants and British financial houses derived immense wealth from Atlantic trade connections...'",
+        question: "How did Scottish cities like Glasgow benefit from the trade in enslaved African people?",
+        options: [
+          "Glasgow merchants ('Tobacco Lords' and 'Sugar Lords') grew wealthy importing slave-produced goods, funding grand architecture",
+          "Glasgow served as the primary departure port for all British slave ships",
+          "Scottish banks refused to invest in Atlantic colonial trade schemes",
+          "Glasgow factories produced iron chains exclusively for coastal fortresses"
+        ],
+        answer: 0,
+        hint: "Glasgow's 'Tobacco Lords' and 'Sugar Lords' accumulated fortunes through slave-produced imports.",
+        debrief: "Glasgow merchants acquired massive fortunes by importing slave-produced sugar, tobacco, and cotton, financing major buildings and infrastructure across Scotland."
+      },
+
+      // ---------------- MODULE 5: IMPACT ON AFRICAN SOCIETIES (5 QUESTIONS) ----------------
+      {
+        moduleId: 5,
+        moduleName: "5. Impact on African Societies",
+        title: "Pre-Trade African Societies",
+        snippet: "Historical Survey of West Africa prior to 1500: 'West African kingdoms possessed advanced culture, agriculture, and government...'",
+        question: "What were West African societies like prior to major European contact and the Transatlantic Slave Trade?",
+        options: [
+          "Largely peaceful, well-organized societies with developed cultures, agriculture, and trading cities",
+          "Barren wilderness regions with no organized agriculture or government",
+          "Industrial societies dominated by coal mining and steam power",
+          "Unpopulated coastal regions with no permanent human settlements"
+        ],
+        answer: 0,
+        hint: "African kingdoms had rich traditions, organized law, fine arts, and active regional trade.",
+        debrief: "West African societies were largely peaceful, culturally rich, and well-organized, with advanced metalworking, textile production, and established kingdoms."
+      },
+      {
+        moduleId: 5,
+        moduleName: "5. Impact on African Societies",
+        title: "The Gun-Slave Cycle (Ashanti & Dahomey)",
+        snippet: "West African Regional History: 'Kingdoms like Ashanti and Dahomey acquired European firearms in exchange for captives...'",
+        question: "How did access to European firearms impact African kingdoms like the Ashanti and Dahomey?",
+        options: [
+          "Allowed them to expand military power and launch raids on neighboring groups to capture prisoners to trade for more guns",
+          "Encouraged them to immediately stop trading with European merchants",
+          "Led to the total abandonment of all mining and agricultural work",
+          "Promoted peaceful diplomatic alliances across all West African tribes"
+        ],
+        answer: 0,
+        hint: "Trading captives for firearms created a vicious cycle of escalating military raids.",
+        debrief: "The 'gun-slave cycle' allowed militarized kingdoms (Ashanti and Dahomey) to acquire firearms, launch raids on neighboring communities, and dominate regional slave trading."
+      },
+      {
+        moduleId: 5,
+        moduleName: "5. Impact on African Societies",
+        title: "Escalation of Inter-Tribal Conflict",
+        snippet: "Historical Analysis of West African Warfare: 'Invasion of coastal slave raiders destroyed villages and spread fear...'",
+        question: "What was a long-term social effect of European slave raiding on relationships between African communities?",
+        options: [
+          "Created widespread hatred, distrust, and perpetual warfare among tribes that lasted for generations",
+          "Unified all West African nations under a single peaceful government",
+          "Eliminated all crime and social conflicts across West Africa",
+          "Prompted African leaders to migrate permanently to Europe"
+        ],
+        answer: 0,
+        hint: "Slave raiding turned neighboring African communities against each other in self-defense.",
+        debrief: "Slave raiding fostered an atmosphere of fear, hatred, and inter-communal warfare, destroying traditional diplomatic ties between neighboring African societies."
+      },
+      {
+        moduleId: 5,
+        moduleName: "5. Impact on African Societies",
+        title: "Agricultural Decline & Famine",
+        snippet: "Economic Survey of West African Agriculture: 'Coastal farmland was abandoned as populations fled inland to escape raiders...'",
+        question: "Why did the Transatlantic Slave Trade lead to severe agricultural decline and famine in parts of West Africa?",
+        options: [
+          "Loss of millions of young, healthy farmers and abandonment of coastal farmland to avoid slave raiders",
+          "European merchants bought all harvested crops at inflated prices",
+          "Locust plagues destroyed all crops across the entire continent simultaneously",
+          "African farmers shifted exclusively to growing cotton for British factories"
+        ],
+        answer: 0,
+        hint: "Removing the youngest and strongest agricultural workers left fewer people to cultivate crops.",
+        debrief: "Losing millions of young, fit adults deprived African communities of key farm labor. Fear of raiders forced people to abandon fertile farmland, causing severe food shortages."
+      },
+      {
+        moduleId: 5,
+        moduleName: "5. Impact on African Societies",
+        title: "Demographic Loss & Economic Damage",
+        snippet: "Demographic Impact Statistics: 'Over 12 million Africans were taken across the Atlantic, while millions more died on inland marches...'",
+        question: "What was the total human and economic toll of the Transatlantic Slave Trade on the African continent?",
+        options: [
+          "Over 12 million taken across Atlantic, 6 million died en route to the coast, and local craft industries were ruined by cheap imports",
+          "100,000 people total were affected with no impact on native craft industries",
+          "African economies doubled in wealth with zero loss of human life",
+          "Population increased due to European medical aid brought to coastal ports"
+        ],
+        answer: 0,
+        hint: "Over 12 million people were taken, millions died in transit, and native industries collapsed.",
+        debrief: "Over 12 million captives were taken, an estimated 6 million died en route to the coast, and cheap European imports undermined local African textile and metal manufacturing."
+      },
+
+      // ---------------- MODULE 6: SLAVE AUCTIONS & SCRAMBLES (5 QUESTIONS) ----------------
+      {
+        moduleId: 6,
+        moduleName: "6. Slave Auctions & Scrambles",
+        title: "Valuation Factors at Colonial Ports",
+        snippet: "Jamaica Plantation Gazette (1780): 'Captains sought maximum prices for their human cargo upon arrival in West Indian harbors...'",
+        question: "Which factors directly influenced the sale price of an enslaved African at colonial auctions?",
+        options: [
+          "Their physical health, age, gender, and current market demand on sugar plantations",
+          "Their ability to speak multiple European languages fluently",
+          "Their formal academic qualifications from European universities",
+          "The color of clothing they wore when departing the slave vessel"
+        ],
+        answer: 0,
+        hint: "Buyers sought physically fit, young workers capable of enduring brutal plantation labor.",
+        debrief: "Auction prices depended on age, gender, physical health, and local sugar plantation demand. Healthy young men fetched the highest prices."
+      },
+      {
+        moduleId: 6,
+        moduleName: "6. Slave Auctions & Scrambles",
+        title: "Public Auction Bidding Platform",
+        snippet: "Colonial Sale Notice (1782): 'Captives forced onto outdoor platforms as plantation owners bid against one another...'",
+        question: "How were healthy enslaved Africans sold during standard colonial auctions?",
+        options: [
+          "Forced onto raised platforms where plantation owners bid against each other to buy individuals",
+          "Allowed to choose which plantation owner they preferred to work for",
+          "Given land deeds to manage their own independent farms",
+          "Exchanged for European paper currency directly at naval customs desks"
+        ],
+        answer: 0,
+        hint: "Buyers inspected captives like property and shouted out competing monetary bids.",
+        debrief: "Enslaved Africans were paraded on auction blocks where plantation buyers poked, inspected, and bid against one another to purchase human beings."
+      },
+      {
+        moduleId: 6,
+        moduleName: "6. Slave Auctions & Scrambles",
+        title: "Colonial Price Inflation",
+        snippet: "Barbados Market Report (1780): 'Prices for fit young male captives have increased dramatically over recent decades...'",
+        question: "How much did the average price for a healthy enslaved male worker rise between 1730 and 1780 in West Indian markets?",
+        options: [
+          "Rose from £30 in 1730 to £100 by 1780",
+          "Rose from £5 in 1730 to £10 by 1780",
+          "Remained fixed at £50 throughout the entire century",
+          "Dropped from £100 in 1730 down to £5 by 1780"
+        ],
+        answer: 0,
+        hint: "Booming sugar profits drove demand and tripled prices over fifty years.",
+        debrief: "Soaring sugar plantation profits increased demand, driving male auction prices from £30 in 1730 up to £100 sterling by 1780."
+      },
+      {
+        moduleId: 6,
+        moduleName: "6. Slave Auctions & Scrambles",
+        title: "The 'Scramble' Method",
+        snippet: "Plantation Owner's Diary (1785): 'Captives remaining after public auction were sold via a scramble at a fixed ticket price...'",
+        question: "What occurred during a colonial 'scramble' sale?",
+        options: [
+          "Buyers bought fixed-price tickets and rushed into an enclosure simultaneously to physically grab captives",
+          "Captives competed in running races to earn their freedom",
+          "Buyers drew names randomly from a brass lottery drum",
+          "Captives were assigned to plantations based on age order"
+        ],
+        answer: 0,
+        hint: "It was a chaotic, violent process where buyers rushed in at a signal to seize captives.",
+        debrief: "In a 'scramble', buyers paid a set price per ticket and, at the sound of a gun or bell, rushed into a room or yard to physically grab and claim captives."
+      },
+      {
+        moduleId: 6,
+        moduleName: "6. Slave Auctions & Scrambles",
+        title: "Disposal of Elderly & Sick Captives",
+        snippet: "Colonial Medical Log: 'Captives too ill or weak to be sold at auction were disposed of in cheap lots or left without care...'",
+        question: "What was the tragic fate of captives who were too sick or elderly to be sold during standard auctions?",
+        options: [
+          "Sold cheaply in 'refuse lots', bought by speculative doctors, or left to perish without medical care",
+          "Provided free passage back to West Africa on returning merchant vessels",
+          "Granted comfortable retirement housing in colonial port cities",
+          "Employed as paid hospital administrators in colonial capitals"
+        ],
+        answer: 0,
+        hint: "Enslavers treated sick or elderly captives as worthless cargo.",
+        debrief: "Sick or elderly captives unable to sell at auction were sold as 'refuse' for tiny sums, bought by doctors hoping to cure and resell them, or left abandoned to die without food or care."
+      }
+    ];
+
+    /* ==========================================================================
+       2. PRIMARY SOURCE ARCHIVE GALLERY CARDS (6 UNLOCKABLE CARDS)
+       ========================================================================== */
+    const GALLERY_TEMPLATES = [
+      {
+        id: 1,
+        code: "DOC-1782-LIV",
+        title: "Triangular Trade Cargo Manifest & Route Log",
+        date: "1782",
+        origin: "Port of Liverpool Customs Archive",
+        transcript: "MANIFEST OF EXPORT: 400 cases wrought brass, 250 flintlock muskets, 60 barrels gunpowder, 1,200 yards Manchester cotton cloth, spirits, and glass beads. Exchange rate established at West African coastal factories for raw materials and captive populations.",
+        qsFacts: [
+          "Ships departed from Liverpool, Bristol, and London carrying manufactured goods.",
+          "Goods exchanged included guns, gunpowder, alcohol, textiles, glass beads, and iron pots.",
+          "Profits from colonial slave sales were reinvested in sugar, tobacco, cotton, and coffee imported back to Britain."
+        ]
+      },
+      {
+        id: 2,
+        code: "DOC-1788-CCC",
+        title: "Cape Coast Castle Surgeon's Journal & Hold Inspection",
+        date: "1788",
+        origin: "Gold Coast Colonial Archive / Parliamentary Papers",
+        transcript: "INSPECTION ENTRY: Dungeons beneath stone fort hold 1,000 captives. Physical examination performed prior to branding with hot iron. Space between decks in hold measures under 0.5 meters. Flux (dysentery) prevalent due to unhygienic conditions.",
+        qsFacts: [
+          "Slave factories were stone prison fortresses where captives were held in dungeons for months.",
+          "Captives deemed fit were branded on the chest with hot irons to prevent substitution.",
+          "Middle passage holds were under 0.5m high, leading to extreme heat, waste accumulation, and rapid disease spread."
+        ]
+      },
+      {
+        id: 3,
+        code: "DOC-1791-RES",
+        title: "Abolitionist Report on Shipboard Resistance & Uprisings",
+        date: "1791",
+        origin: "Society for Effecting the Abolition of the Slave Trade",
+        transcript: "EVIDENCE OF RESISTANCE: Multiple instances recorded where captives chose self-starvation or leagued together to throw themselves overboard rather than endure captivity. Shipboard revolts attempted on 1 in 10 voyages, though suppressed by armed crews.",
+        qsFacts: [
+          "Enslaved Africans resisted via hunger strikes, jumping overboard, and shipboard revolts.",
+          "Revolts often failed due to lack of weapons, physical weakness from disease, and armed crew retaliation.",
+          "Captors used interpreters to dissuade resistance and inflicted severe punishments like flogging."
+        ]
+      },
+      {
+        id: 4,
+        code: "DOC-1795-LIV",
+        title: "Liverpool & Bristol Economic Growth Ledger",
+        date: "1795",
+        origin: "Merchants' Guild & Port Authority Records",
+        transcript: "PORT DEVELOPMENT REPORT: Between 1699 and 1807, British ports fitted out 12,103 slave voyages. Liverpool population expanded sixteenfold from 5,000 to 78,000. Employment sustained in ropemaking, shipbuilding, dockwork, and sugar refining.",
+        qsFacts: [
+          "12,103 slave voyages departed from British ports between 1699 and 1807.",
+          "Liverpool grew from a small fishing town of 5,000 in 1699 to a city of 78,000 by 1800.",
+          "Profits funded British financial firms (banks, insurance), factories, and grand municipal buildings."
+        ]
+      },
+      {
+        id: 5,
+        code: "DOC-1804-AFR",
+        title: "Memorandum on West African Demographic & Economic Impact",
+        date: "1804",
+        origin: "African Association Historical Inquiry",
+        transcript: "REGIONAL SURVEY: Over 12 million Africans forcibly removed; an estimated 6 million perished during inland transit to the coast. Influx of firearms escalated inter-communal warfare. Farmland abandoned near coasts, triggering famine and craft collapse.",
+        qsFacts: [
+          "12 million people taken from Africa; 6 million died en route to coastal factories.",
+          "European gun trade militarized kingdoms (Ashanti, Dahomey), fueling long-term warfare and hatred.",
+          "Loss of young workers caused abandoned farmland, regional famine, and collapse of local textile/metal crafts."
+        ]
+      },
+      {
+        id: 6,
+        code: "DOC-1785-JAM",
+        title: "Jamaica Colonial Gazette Auction & Scramble Record",
+        date: "1785",
+        origin: "Kingston Public Advertiser & Plantation Ledger",
+        transcript: "COLONIAL SALE NOTICE: Price for fit young male captives reached £100 sterling (up from £30 in 1730). Remaining captives submitted to 'Scramble' wherein buyers with fixed-price tickets rushed to claim individuals. Unsold sick captives sold in lots.",
+        qsFacts: [
+          "Healthy male prices rose from £30 in 1730 to £100 by 1780 in West Indian markets.",
+          "Public auctions and chaotic 'scrambles' treated human beings as commercial property.",
+          "Unsold or elderly/sick captives were left without care or worked to death by harsh buyers."
+        ]
+      }
+    ];
+
+    /* ==========================================================================
+       3. STORAGE & STATE ENGINE
+       ========================================================================== */
+    const STORAGE_KEY = "QS_TRANSATLANTIC_ARCHIVE_DATA_V2";
+    let dataset = [];
+    let unlockedDocIds = new Set();
+    let currentModuleId = 1;
+    let activeTab = 'modules';
+    let soundEnabled = true;
+
+    // NON-REPEATING QUESTION QUEUE STATE
+    let currentModuleQueue = [];
+    let currentQuestionIndexInQueue = 0;
+    let currentShuffledQuestion = null;
+
+    // Safe LocalStorage Get/Set
+    function safeGetStorage(key) {
+      try {
+        const val = localStorage.getItem(key);
+        return val ? JSON.parse(val) : null;
+      } catch (e) {
+        console.warn("Storage access restricted:", e);
+        return null;
+      }
+    }
+
+    function safeSetStorage(key, val) {
+      try {
+        localStorage.setItem(key, JSON.stringify(val));
+      } catch (e) {
+        console.warn("Storage write restricted:", e);
+      }
+    }
+
+    // Audio Engine
+    function toggleSound() {
+      soundEnabled = !soundEnabled;
+      const btn = document.getElementById('soundToggleBtn');
+      btn.textContent = soundEnabled ? "🔊 Sound: ON" : "🔇 Sound: OFF";
+      showToast(soundEnabled ? "Sound Effects Enabled" : "Sound Muted", "info");
+    }
+
+    function playBell(type) {
+      if (!soundEnabled) return;
+      try {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (!AudioCtx) return;
+        const ctx = new AudioCtx();
+
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+
+        osc.type = 'sine';
+        if (type === 'correct') {
+          osc.frequency.setValueAtTime(523.25, ctx.currentTime); // C5
+          osc.frequency.exponentialRampToValueAtTime(659.25, ctx.currentTime + 0.15); // E5
+          gain.gain.setValueAtTime(0.08, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
+          osc.start();
+          osc.stop(ctx.currentTime + 0.4);
+        } else if (type === 'unlock') {
+          [523.25, 659.25, 783.99].forEach((freq, i) => {
+            const o = ctx.createOscillator();
+            const g = ctx.createGain();
+            o.connect(g);
+            g.connect(ctx.destination);
+            o.type = 'sine';
+            o.frequency.value = freq;
+            g.gain.setValueAtTime(0.06, ctx.currentTime + i * 0.1);
+            g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.1 + 0.3);
+            o.start(ctx.currentTime + i * 0.1);
+            o.stop(ctx.currentTime + i * 0.1 + 0.3);
+          });
+        }
+      } catch (e) {
+        // Silent fallback
+      }
+    }
+
+    /* ==========================================================================
+       4. CUSTOM UI NOTIFICATIONS & CONFIRMATIONS (NO ALERT/CONFIRM)
+       ========================================================================== */
+    function showToast(message, type = "info") {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      
+      let bg = "bg-amber-950 border-brass text-brassLight";
+      if (type === "success") bg = "bg-emerald-950 border-emerald-500 text-emerald-200";
+      if (type === "error") bg = "bg-rose-950 border-rose-500 text-rose-200";
+
+      toast.className = `px-4 py-2.5 rounded-xl border font-sans text-xs font-semibold shadow-2xl transition transform translate-y-2 opacity-0 pointer-events-auto flex items-center gap-2 ${bg}`;
+      toast.innerHTML = `<span>${type === 'success' ? '✓' : 'ℹ'}</span> <span>${message}</span>`;
+      
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.classList.remove('translate-y-2', 'opacity-0');
+      }, 10);
+
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+
+    function showConfirmDialog(title, message, onConfirm) {
+      const modal = document.getElementById('customConfirmModal');
+      document.getElementById('confirmModalTitle').textContent = title;
+      document.getElementById('confirmModalMessage').textContent = message;
+
+      const okBtn = document.getElementById('confirmModalOkBtn');
+      const cancelBtn = document.getElementById('confirmModalCancelBtn');
+
+      const cleanup = () => {
+        modal.classList.add('hidden');
+        okBtn.onclick = null;
+        cancelBtn.onclick = null;
+      };
+
+      okBtn.onclick = () => {
+        cleanup();
+        onConfirm();
+      };
+
+      cancelBtn.onclick = cleanup;
+      modal.classList.remove('hidden');
+    }
+
+    /* ==========================================================================
+       5. FISHER-YATES SHUFFLER & QUESTION QUEUE ENGINE
+       ========================================================================== */
+    function shuffleArray(arr) {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    function prepareShuffledQuestion(origQ) {
+      const originalCorrectText = origQ.options[origQ.answer];
+      const shuffledOptions = shuffleArray(origQ.options);
+      const newCorrectIndex = shuffledOptions.indexOf(originalCorrectText);
+
+      return {
+        ...origQ,
+        options: shuffledOptions,
+        answer: newCorrectIndex
+      };
+    }
+
+    /* ==========================================================================
+       6. UI CONTROLLERS & RENDERING
+       ========================================================================== */
+    function dismissRespectModal() {
+      document.getElementById('respectModal').classList.add('hidden');
+    }
+
+    function switchTab(tab) {
+      activeTab = tab;
+      const modulesView = document.getElementById('viewModules');
+      const galleryView = document.getElementById('viewGallery');
+      const tabModBtn = document.getElementById('tabModulesBtn');
+      const tabGalBtn = document.getElementById('tabGalleryBtn');
+
+      if (tab === 'modules') {
+        modulesView.classList.remove('hidden');
+        galleryView.classList.add('hidden');
+        tabModBtn.className = "flex-1 py-3 px-4 rounded-xl font-display font-bold text-xs md:text-sm tracking-wider uppercase bg-brass text-museumDark border border-brassLight shadow-lg transition";
+        tabGalBtn.className = "flex-1 py-3 px-4 rounded-xl font-display font-bold text-xs md:text-sm tracking-wider uppercase bg-slate-900/80 text-amber-200/70 border border-amber-900/40 hover:text-amber-200 transition";
+      } else {
+        modulesView.classList.add('hidden');
+        galleryView.classList.remove('hidden');
+        tabGalBtn.className = "flex-1 py-3 px-4 rounded-xl font-display font-bold text-xs md:text-sm tracking-wider uppercase bg-brass text-museumDark border border-brassLight shadow-lg transition";
+        tabModBtn.className = "flex-1 py-3 px-4 rounded-xl font-display font-bold text-xs md:text-sm tracking-wider uppercase bg-slate-900/80 text-amber-200/70 border border-amber-900/40 hover:text-amber-200 transition";
+        renderGallery();
+      }
+    }
+
+    function renderModuleSidebar() {
+      const listContainer = document.getElementById('moduleList');
+      const moduleMap = {};
+
+      dataset.forEach(q => {
+        if (!moduleMap[q.moduleId]) {
+          moduleMap[q.moduleId] = { id: q.moduleId, name: q.moduleName, count: 0 };
+        }
+        moduleMap[q.moduleId].count++;
+      });
+
+      let html = '';
+      Object.values(moduleMap).forEach(mod => {
+        const isActive = (mod.id === currentModuleId);
+        const isUnlocked = unlockedDocIds.has(mod.id);
+
+        let bgClass = "bg-slate-900/70 border-slate-800 text-slate-300 hover:border-amber-900/60";
+        if (isActive) {
+          bgClass = "bg-amber-950/80 border-brass text-brassLight font-bold shadow-md";
+        }
+
+        html += `
+          <button onclick="selectModule(${mod.id})" class="p-3 rounded-xl border text-left text-xs transition flex items-center justify-between ${bgClass}">
+            <div class="flex items-center gap-2">
+              <span class="text-sm">${isUnlocked ? '📜' : '🔒'}</span>
+              <span class="font-serif font-medium">${mod.name}</span>
+            </div>
+            <span class="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-black/40 text-amber-300/80">
+              ${isUnlocked ? 'UNLOCKED' : '5 QUESTIONS'}
+            </span>
+          </button>
+        `;
+      });
+
+      listContainer.innerHTML = html;
+    }
+
+    // SELECT MODULE & INITIALIZE NON-REPEATING QUEUE
+    function selectModule(modId) {
+      currentModuleId = modId;
+      const questionsInModule = dataset.filter(q => q.moduleId === currentModuleId);
+      
+      // Clone & Fisher-Yates shuffle the question list itself
+      currentModuleQueue = shuffleArray(questionsInModule).map(q => prepareShuffledQuestion(q));
+      currentQuestionIndexInQueue = 0;
+
+      renderModuleSidebar();
+      loadActiveQuestion();
+    }
+
+    function loadActiveQuestion() {
+      if (currentModuleQueue.length === 0) return;
+
+      if (currentQuestionIndexInQueue >= currentModuleQueue.length) {
+        // Completed full queue pass! Re-shuffle for next cycle
+        const questionsInModule = dataset.filter(q => q.moduleId === currentModuleId);
+        currentModuleQueue = shuffleArray(questionsInModule).map(q => prepareShuffledQuestion(q));
+        currentQuestionIndexInQueue = 0;
+        showToast(`Module ${currentModuleId} set completed! Questions reshuffled.`, "success");
+      }
+
+      currentShuffledQuestion = currentModuleQueue[currentQuestionIndexInQueue];
+      const q = currentShuffledQuestion;
+
+      // UI updates
+      document.getElementById('activeModuleBadge').textContent = q.moduleName.toUpperCase();
+      document.getElementById('questionProgressBadge').textContent = `QUESTION ${currentQuestionIndexInQueue + 1} OF ${currentModuleQueue.length}`;
+      document.getElementById('sourceSnippetText').textContent = `"${q.snippet}"`;
+      document.getElementById('investigationQuestionText').textContent = q.question;
+      document.getElementById('archivistHintText').textContent = `Archivist Hint: ${q.hint}`;
+
+      // Reset debrief and next button
+      document.getElementById('debriefContainer').classList.add('hidden');
+      document.getElementById('nextQuestionBtn').classList.add('hidden');
+
+      // Render Options Grid
+      const optionsContainer = document.getElementById('optionsContainer');
+      const letters = ['A', 'B', 'C', 'D'];
+      let html = '';
+
+      q.options.forEach((optText, idx) => {
+        html += `
+          <button id="optBtn_${idx}" onclick="handleOptionSelect(${idx})" class="btn-archivist rounded-xl p-3.5 text-left font-serif text-xs md:text-sm leading-relaxed flex items-center gap-3">
+            <span class="w-7 h-7 rounded-lg bg-black/60 border border-brass/40 text-brassLight font-sans font-bold text-xs flex items-center justify-center flex-shrink-0">
+              ${letters[idx]}
+            </span>
+            <span class="flex-1">${optText}</span>
+          </button>
+        `;
+      });
+
+      optionsContainer.innerHTML = html;
+    }
+
+    function handleOptionSelect(optIdx) {
+      const q = currentShuffledQuestion;
+      const isCorrect = (optIdx === q.answer);
+
+      // Disable all option buttons
+      for (let i = 0; i < q.options.length; i++) {
+        const btn = document.getElementById(`optBtn_${i}`);
+        if (btn) {
+          btn.disabled = true;
+          if (i === q.answer) {
+            btn.classList.add('correct');
+          } else if (i === optIdx && !isCorrect) {
+            btn.classList.add('wrong');
+          }
+        }
+      }
+
+      // Show Debrief
+      document.getElementById('debriefContentText').textContent = q.debrief;
+      document.getElementById('debriefContainer').classList.remove('hidden');
+
+      if (isCorrect) {
+        playBell('correct');
+
+        // Unlock Document Card for this Module
+        if (!unlockedDocIds.has(q.moduleId)) {
+          unlockedDocIds.add(q.moduleId);
+          playBell('unlock');
+          saveStateToStorage();
+          updateUnlockedBadgeCount();
+          renderModuleSidebar();
+          showToast(`Archive Card DOC-00${q.moduleId} Unlocked!`, "success");
+        }
+
+        document.getElementById('nextQuestionBtn').classList.remove('hidden');
+      } else {
+        document.getElementById('nextQuestionBtn').classList.remove('hidden');
+      }
+    }
+
+    function advanceQuestion() {
+      currentQuestionIndexInQueue++;
+      loadActiveQuestion();
+    }
+
+    function updateUnlockedBadgeCount() {
+      document.getElementById('unlockedCountBadge').textContent = unlockedDocIds.size;
+      document.getElementById('galleryProgressText').textContent = `${unlockedDocIds.size} / 6`;
+    }
+
+    /* ==========================================================================
+       7. GALLERY RENDERER (UNLOCKED PRIMARY EVIDENCE CARDS)
+       ========================================================================== */
+    function renderGallery() {
+      const grid = document.getElementById('galleryGrid');
+      let html = '';
+
+      GALLERY_TEMPLATES.forEach(doc => {
+        const isUnlocked = unlockedDocIds.has(doc.id);
+
+        if (isUnlocked) {
+          html += `
+            <div class="parchment-card rounded-2xl p-5 flex flex-col justify-between border-2 border-brass/60 shadow-xl relative overflow-hidden">
+              <div class="flex items-center justify-between border-b border-stone-300 pb-2 mb-3">
+                <span class="text-[10px] font-mono font-bold uppercase tracking-widest text-amber-900 bg-amber-100 px-2 py-0.5 rounded border border-amber-300">
+                  ${doc.code}
+                </span>
+                <span class="text-xs font-serif font-bold text-amber-900">
+                  ${doc.date}
+                </span>
+              </div>
+
+              <h3 class="font-display font-bold text-sm text-stone-900 mb-1 leading-snug">
+                ${doc.title}
+              </h3>
+              <p class="text-[11px] text-stone-600 font-serif mb-3 italic">
+                Source: ${doc.origin}
+              </p>
+
+              <!-- Primary Source Transcript Box -->
+              <div class="p-3 rounded-lg bg-stone-100 border border-stone-300 text-xs font-serif text-stone-800 leading-relaxed mb-4">
+                "${doc.transcript}"
+              </div>
+
+              <!-- QS National 5 Exam Focus Points -->
+              <div class="border-t border-stone-300 pt-3 mt-auto">
+                <h4 class="text-[11px] font-sans font-bold uppercase tracking-wider text-amber-950 mb-1 flex items-center gap-1">
+                  <span>📌</span> QS NATIONAL 5 EXAM FOCUS:
+                </h4>
+                <ul class="list-disc list-inside text-[11px] font-serif text-stone-700 space-y-1">
+                  ${doc.qsFacts.map(fact => `<li>${fact}</li>`).join('')}
+                </ul>
+              </div>
+
+              <div class="mt-4 pt-2 text-center border-t border-stone-200 text-[10px] font-sans font-bold text-amber-900 uppercase tracking-widest">
+                ✓ VERIFIED PRIMARY EVIDENCE
+              </div>
+            </div>
+          `;
+        } else {
+          html += `
+            <div class="museum-panel rounded-2xl p-6 flex flex-col items-center justify-center text-center border border-amber-900/30 min-h-[320px]">
+              <span class="text-4xl mb-3 opacity-40">🔒</span>
+              <h3 class="font-display font-bold text-sm text-amber-200/60 mb-2">
+                CLASSIFIED ARCHIVE DOCUMENT
+              </h3>
+              <p class="text-xs text-slate-400 font-serif max-w-xs leading-relaxed mb-4">
+                Answer an investigation query for <strong>Module ${doc.id}</strong> correctly to unlock this primary evidence card.
+              </p>
+              <button onclick="switchTab('modules'); selectModule(${doc.id});" class="px-4 py-2 rounded-lg bg-amber-950 hover:bg-amber-900 text-xs text-brassLight font-semibold border border-brass/30 transition">
+                Go to Module ${doc.id}
+              </button>
+            </div>
+          `;
+        }
+      });
+
+      grid.innerHTML = html;
+    }
+
+    /* ==========================================================================
+       8. TEACHER EDITOR SUITE & DATA ACTIONS
+       ========================================================================== */
+    function openTeacherEditor() {
+      document.getElementById('jsonEditorArea').value = JSON.stringify(dataset, null, 2);
+      document.getElementById('teacherModal').classList.remove('hidden');
+    }
+
+    function closeTeacherEditor() {
+      document.getElementById('teacherModal').classList.add('hidden');
+    }
+
+    function saveTeacherJSON() {
+      try {
+        const parsed = JSON.parse(document.getElementById('jsonEditorArea').value);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          dataset = parsed;
+          saveStateToStorage();
+          closeTeacherEditor();
+          selectModule(currentModuleId);
+          showToast("QS Question Dataset updated successfully!", "success");
+        } else {
+          showToast("Invalid JSON: Must be a non-empty question array.", "error");
+        }
+      } catch (e) {
+        showToast("JSON Syntax Error: " + e.message, "error");
+      }
+    }
+
+    function confirmResetDefaultJSON() {
+      showConfirmDialog(
+        "RESTORE DEFAULT QS DATASET",
+        "This will restore all 30 default QS National 5 questions for Booklet 1. Continue?",
+        () => {
+          dataset = [...DEFAULT_DATASET];
+          saveStateToStorage();
+          closeTeacherEditor();
+          selectModule(currentModuleId);
+          showToast("Default QS dataset restored.", "success");
+        }
+      );
+    }
+
+    function confirmResetProgress() {
+      showConfirmDialog(
+        "RESET ARCHIVE PROGRESS",
+        "Are you sure you wish to lock all primary document cards and restart your research?",
+        () => {
+          unlockedDocIds.clear();
+          saveStateToStorage();
+          updateUnlockedBadgeCount();
+          renderModuleSidebar();
+          selectModule(currentModuleId);
+          if (activeTab === 'gallery') renderGallery();
+          showToast("Research progress reset.", "info");
+        }
+      );
+    }
+
+    function saveStateToStorage() {
+      safeSetStorage(STORAGE_KEY, {
+        dataset: dataset,
+        unlocked: Array.from(unlockedDocIds)
+      });
+    }
+
+    /* ==========================================================================
+       9. INITIALIZATION ENGINE
+       ========================================================================== */
+    function init() {
+      const stored = safeGetStorage(STORAGE_KEY);
+      if (stored && stored.dataset && Array.isArray(stored.dataset) && stored.dataset.length >= 12) {
+        dataset = stored.dataset;
+        if (stored.unlocked && Array.isArray(stored.unlocked)) {
+          unlockedDocIds = new Set(stored.unlocked);
+        }
+      } else {
+        dataset = [...DEFAULT_DATASET];
+      }
+
+      updateUnlockedBadgeCount();
+      selectModule(1);
+    }
+
+    // Triple fail-safe startup sequence
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+      setTimeout(init, 1);
+    } else {
+      document.addEventListener('DOMContentLoaded', init);
+      window.addEventListener('load', init);
+    }
+  </script>
+</body>
+</html>
